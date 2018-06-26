@@ -696,9 +696,9 @@ class HomeMainState extends State<HomeMain> {
     print("loadmore--");
 //    var response;
 //    String url =
-//        'http://10.155.237.78:8080/biyanzhi/loadMorePictureList.do?publish_time=0&user_id=100&requestFrom=wechat';
+//        'http://10.155.60.175:8080/biyanzhi/loadMorePictureList.do?publish_time=0&user_id=100&requestFrom=wechat';
 //    String url =
-//        'http://10.155.237.78:8080/biyanzhi/loadMorePictureList.do?publish_time=' +
+//        'http://10.155.60.175:8080/biyanzhi/loadMorePictureList.do?publish_time=' +
 //            last_publish_time +
 //            '&user_id=100&requestFrom=wechat';
 //    response = await http.read(url);
@@ -714,7 +714,7 @@ class HomeMainState extends State<HomeMain> {
   _requestData() async {
     var response;
     String url =
-        'http://10.155.237.78:8080/biyanzhi/getpicturelists.do?publish_time=' +
+        'http://10.155.60.175:8080/biyanzhi/getpicturelists.do?publish_time=' +
             first_publish_time +
             '&user_id=992&requestFrom=wechat';
     response = await http.read(url);
@@ -734,7 +734,7 @@ class HomeMainState extends State<HomeMain> {
 
   _requestXiuChangData() async {
     var response;
-    String url = 'http://10.155.237.78:8080/biyanzhi/getXiuYiXiuList.do?time=' +
+    String url = 'http://10.155.60.175:8080/biyanzhi/getXiuYiXiuList.do?time=' +
         xiuchang_first_publish_time +
         '&user_id=992&requestFrom=wechat&page=' +
         xiuchang_page.toString();
@@ -757,7 +757,7 @@ class HomeMainState extends State<HomeMain> {
   _getUserInfo() async {
     var response;
     String url =
-        'http://10.155.237.78:8080/biyanzhi/getUserInfo.do?publicsher_user_id=1456&user_id=992&requestFrom=wechat&app_version_code=0';
+        'http://10.155.60.175:8080/biyanzhi/getUserInfo.do?publicsher_user_id=1456&user_id=992&requestFrom=wechat&app_version_code=0';
     response = await http.read(url);
     Map data = JSON.decode(response);
   }

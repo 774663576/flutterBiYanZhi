@@ -16,6 +16,7 @@ class Comment {
     Comment comment = new Comment();
     comment.comment_id = com['publish_time'];
     comment.picture_id = com['picture_id'];
+    comment.comment_content=com['comment_content'];
     comment.publisher_name = com['publisher_name'];
     comment.publisher_avatar = com['publisher_avatar'];
     comment.comment_time = com['comment_time'];

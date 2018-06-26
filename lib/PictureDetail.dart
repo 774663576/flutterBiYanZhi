@@ -231,10 +231,14 @@ class PictureDetailState extends State<PictureDetail> {
                         ],
                       ),
                     ),
-                    new ListView(
-                      children: commentsLists.toList(),
-                    )
                   ],
+                ),
+                new Column(
+                  children:
+                      new List.generate(commentsIitems.length, (int index) {
+                    //5 = number of cards per date
+                    return _getCommentItemView(commentsIitems[index]);
+                  }),
                 )
               ]),
             ),
@@ -246,42 +250,42 @@ class PictureDetailState extends State<PictureDetail> {
 
   Widget _getCommentItemView(var com) {
     Comment comment = Comment.parseComment(com);
-    return new Text(comment.comment_content);
-//    return new Container(
-//      padding: new EdgeInsets.only(top: 5.0, bottom: 5.0),
-//      decoration: new BoxDecoration(
-//        border: new Border(top: new BorderSide(color: Colors.black12)),
-//      ),
-//      child: new Row(
-//        children: <Widget>[
-//          new Padding(
-//            padding: new EdgeInsets.only(left: 5.0, right: 5.0),
-//            child: new CircleAvatar(
-//              radius: 20.0,
-//              backgroundImage: new NetworkImage(
-//                comment.publisher_avatar,
-//              ),
-//            ),
-//          ),
-//          new Column(
-//            crossAxisAlignment: CrossAxisAlignment.start,
-//            children: <Widget>[
-//              new Text(
-//                comment.publisher_name,
-//                style: new TextStyle(
-//                  fontSize: 16.0,
-//                  color: Colors.black,
-//                ),
-//              ),
-//              new Text(
-//                comment.comment_content,
-//                style: new TextStyle(fontSize: 14.0, color: Colors.black),
-//              ),
-//            ],
-//          ),
-//        ],
-//      ),
-//    );
+    return new Container(
+      padding: new EdgeInsets.only(top: 5.0, bottom: 5.0),
+      decoration: new BoxDecoration(
+        border: new Border(bottom: new BorderSide(color: Colors.black12)),
+      ),
+      child: new Row(
+        children: <Widget>[
+          new Padding(
+            padding: new EdgeInsets.only(left: 5.0, right: 5.0),
+            child: new CircleAvatar(
+              radius: 20.0,
+              backgroundImage: new NetworkImage(
+                comment.publisher_avatar,
+              ),
+            ),
+          ),
+          new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Text(
+                comment.publisher_name,
+                style: new TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                ),
+                maxLines: 1,
+              ),
+              new Text(
+                comment.comment_content,
+                style: new TextStyle(fontSize: 14.0, color: Colors.black),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   changeScores(int score) {
@@ -296,7 +300,7 @@ class PictureDetailState extends State<PictureDetail> {
     var response = await http.read(url);
     Map data = JSON.decode(response);
     var commentsLists = data['comments'];
-    print(response);
+    print(commentsLists);
     setState(() {
       commentsIitems.addAll(commentsLists);
     });
