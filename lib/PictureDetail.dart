@@ -4,16 +4,17 @@
 
 import 'dart:convert';
 
-import 'package:biyanzhi/Constants.dart';
 import 'package:biyanzhi/Util.dart';
 import 'package:biyanzhi/model/Comment.dart';
 import 'package:biyanzhi/model/Picture.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
 
 class PictureDetail extends StatefulWidget {
   static const String routeName = '/contacts';
   Picture picture;
+  var _commentContent;
 
   PictureDetail(this.picture);
 
@@ -27,6 +28,8 @@ class PictureDetailState extends State<PictureDetail> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
+  final TextEditingController _textCommentController =
+      new TextEditingController();
 
   Picture picture;
   var commentsIitems = [];
@@ -239,10 +242,58 @@ class PictureDetailState extends State<PictureDetail> {
                     //5 = number of cards per date
                     return _getCommentItemView(commentsIitems[index]);
                   }),
-                )
+                ),
               ]),
             ),
           ],
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: new Container(
+            padding: new EdgeInsets.only(right: 8.0),
+            child: new Row(
+              children: <Widget>[
+                new Expanded(
+                    child: new Container(
+                  height: 60.0,
+                  child: new TextField(
+                    controller: _textCommentController,
+                    autofocus: false,
+                    decoration: new InputDecoration.collapsed(
+                        hintText: "评论一下TA",
+                        hintStyle: new TextStyle(
+                          color: Colors.black12,
+                        )),
+                  ),
+                  margin: new EdgeInsets.only(
+                      top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                  decoration: new BoxDecoration(
+                      borderRadius:
+                          new BorderRadius.all(const Radius.circular(4.0)),
+                      border: Border.all(color: Colors.black12)),
+                )),
+
+//
+                new Container(
+                    height: 40.0,
+                    child: new OutlineButton(
+                      borderSide:
+                          new BorderSide(color: Colors.black12, width: 2.0),
+                      child: new Text(
+                        '回复',
+                        style: new TextStyle(
+                            color: Colors.black54, fontSize: 16.0),
+                      ),
+                      onPressed: () {
+                        _sendComment();
+                      },
+                    )),
+              ],
+            ),
+            decoration: new BoxDecoration(
+              border: new Border(top: new BorderSide(color: Colors.black12)),
+            ),
+            height: 60.0,
+          ),
         ),
       ),
     );
@@ -304,5 +355,12 @@ class PictureDetailState extends State<PictureDetail> {
     setState(() {
       commentsIitems.addAll(commentsLists);
     });
+  }
+
+  _sendComment() async {
+    String url = Util.getAddCommentAPI(picture.picture_id.toString(), _textCommentController.text);
+    var response = await http.read(url);
+    print("addComment:" + response.toString());
+    _textCommentController.clear();
   }
 }

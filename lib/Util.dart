@@ -58,9 +58,21 @@ class Util {
   }
 
   static getPictureCommentsAPI(var picture_id) {
-    return Constants.API_HOST
-        + "getCommentByPictureID.do?picture_id=" + picture_id + "&page=1" +
+    return Constants.API_HOST +
+        "getCommentByPictureID.do?picture_id=" +
+        picture_id +
+        "&page=1" +
         Constants.COMMON_PARAMETER;
   }
 
+  static getAddCommentAPI(var picture_id, var commentConent) {
+    return Constants.API_HOST +
+        "addcomment.do?picture_id=" +
+        picture_id +
+        "&comment_content=" +
+        commentConent +
+        "&reply_someone_name=&reply_someone_id=0&publisher_name=五月&publisher_avatar=&picture_publisher_id=" +
+        Constants.USER_ID +
+        Constants.COMMON_PARAMETER;
+  }
 }
